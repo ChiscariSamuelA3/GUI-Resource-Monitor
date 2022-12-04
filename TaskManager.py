@@ -6,6 +6,7 @@ class TaskManager:
     def __init__(self):
         pass
 
+    # ---------------------------CPU------------------------------ #
     def get_cpu_count(self):
         # get total number of phiysical cores
         # get total number of logical cores
@@ -23,6 +24,8 @@ class TaskManager:
         # get cpu usage per physical core
         return psutil.cpu_percent(interval=0.5)
 
+    # ---------------------------Memory------------------------------ #
+
     def get_memory_usage(self):
         # get used memory
         return psutil.virtual_memory().used
@@ -35,6 +38,8 @@ class TaskManager:
         # get memory stats
         return psutil.virtual_memory()
 
+    # ---------------------------DISK-------------------------------- #
+
     def get_partitions_info(self):
         # partitions usage
         partitions = psutil.disk_partitions()
@@ -45,15 +50,17 @@ class TaskManager:
 
             # mount info in GB
             mount_info = psutil.disk_usage(partition.mountpoint)
-            mount_info_total = mount_info.total / (1024 ** 3)
-            mount_info_used = mount_info.used / (1024 ** 3)
-            mount_info_free = mount_info.free / (1024 ** 3)
+            mount_info_total = round(mount_info.total / (1024 ** 3), 4)
+            mount_info_used = round(mount_info.used / (1024 ** 3), 4)
+            mount_info_free = round(mount_info.free / (1024 ** 3), 4)
             mount_info_percent = mount_info.percent
 
             partitions_info.append(
                 [partition_name, mount_info_total, mount_info_used, mount_info_free, mount_info_percent])
 
         return partitions_info
+
+    # ---------------------------NETWORK------------------------------ #
 
     def get_network_usage(self):
         # get network usage

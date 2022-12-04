@@ -18,12 +18,14 @@ def init_tab_content(x_range, y_range, x_label, y_label):
 
 def add_cpu_stats(tab, task_manager):
     cpu_physical_cores, cpu_logical_cores = task_manager.get_cpu_count()
+
     physical_cores_label = QtWidgets.QLabel("Physical cores: " + str(cpu_physical_cores))
     logical_cores_label = QtWidgets.QLabel("Logical cores: " + str(cpu_logical_cores))
     tab.layout.addWidget(physical_cores_label)
     tab.layout.addWidget(logical_cores_label)
 
     cpu_frequency = task_manager.get_cpu_freq()
+
     cpu_freq_max_label = QtWidgets.QLabel("CPU max frequency: " + str(cpu_frequency[0]) + " MHz")
     cpu_freq_min_label = QtWidgets.QLabel("CPU min frequency: " + str(cpu_frequency[1]) + " MHz")
     cpu_freq_current_label = QtWidgets.QLabel("CPU current frequency: " + str(cpu_frequency[2]) + " MHz")
@@ -44,8 +46,8 @@ def add_cpu_stats(tab, task_manager):
 def add_memory_stats(tab, task_manager):
     # get memory info in gb
     memory_stats = task_manager.get_memory_stats()
-    # with 2 decimal places
     memory_stats = [round(x / (1024 ** 3), 2) for x in memory_stats]
+
     memory_total_label = QtWidgets.QLabel("Total memory: " + str(memory_stats[0]) + " GB")
     memory_available_label = QtWidgets.QLabel("Available memory: " + str(memory_stats[1]) + " GB")
     memory_free_label = QtWidgets.QLabel("In use memory: " + str(memory_stats[3]) + " GB")
@@ -56,6 +58,45 @@ def add_memory_stats(tab, task_manager):
     tab.layout.addWidget(memory_percent_label, alignment=QtCore.Qt.AlignCenter)
 
 
+def add_partitions_stats(tab, task_manager):
+    partitions_info = task_manager.get_partitions_info()
+
+    for partition in partitions_info:
+        partition_layout = QtWidgets.QGridLayout()
+        partition_layout.setSpacing(50)
+
+        # partition name
+        partition_name_label = QtWidgets.QLabel("Partition name: " + partition[0])
+        partition_layout.addWidget(partition_name_label, 0, 0)
+
+        # partition total size
+        partition_total_size_label = QtWidgets.QLabel("Total size: " + str(partition[1]) + " GB")
+        partition_layout.addWidget(partition_total_size_label, 0, 1)
+
+        # partition used size
+        partition_used_size_label = QtWidgets.QLabel("Used size: " + str(partition[2]) + " GB")
+        partition_layout.addWidget(partition_used_size_label, 0, 2)
+
+        # partition free size
+        partition_free_size_label = QtWidgets.QLabel("Free size: " + str(partition[3]) + " GB")
+        partition_layout.addWidget(partition_free_size_label, 0, 3)
+
+        # partition usage
+        partition_usage_label = QtWidgets.QLabel("Usage: " + str(partition[4]) + "%")
+        partition_layout.addWidget(partition_usage_label, 0, 4)
+
+        tab.layout.addLayout(partition_layout)
+
+
+def add_network_stats(tab, task_manager):
+    network_stats = task_manager.get_network_usage()
+
+    network_sent_label = QtWidgets.QLabel("Sent: (YELLOW) " + str(network_stats[0]) + " MB")
+    network_recv_label = QtWidgets.QLabel("Received: (GREEN) " + str(network_stats[1]) + " MB")
+    tab.layout.addWidget(network_sent_label, alignment=QtCore.Qt.AlignCenter)
+    tab.layout.addWidget(network_recv_label, alignment=QtCore.Qt.AlignCenter)
+
+
 def init_tab_layout(tab: QtWidgets.QWidget, resource_plot, tab_type, task_manager):
     tab.layout = QtWidgets.QVBoxLayout()
     tab.layout.addWidget(resource_plot)
@@ -64,6 +105,10 @@ def init_tab_layout(tab: QtWidgets.QWidget, resource_plot, tab_type, task_manage
         add_cpu_stats(tab, task_manager)
     elif tab_type == 1:  # memory
         add_memory_stats(tab, task_manager)
+    elif tab_type == 2:  # disk
+        add_partitions_stats(tab, task_manager)
+    elif tab_type == 3:  # network
+        add_network_stats(tab, task_manager)
 
     tab.setLayout(tab.layout)
 
@@ -115,7 +160,8 @@ def update_plots(cpu_tab, memory_tab, partitions_tab, network_tab, cpu_usage, me
                  memory_curve, network_sent_curve, network_received_curve, app):
     while True:
         try:
-            ###########################################################################################
+            #######################################################################################
+            # ------------------------------- CPU TAB ---------------------------------------------#
             # update cpu usage
             update_monitoring_info(cpu_usage, cpu_curve, task_manager.get_cpu_usage())
             # get cpu per core
@@ -127,7 +173,7 @@ def update_plots(cpu_tab, memory_tab, partitions_tab, network_tab, cpu_usage, me
             # update label
             cpu_tab.layout.itemAt(6).widget().setText("CPU cores usage: " + cpu_core_string)
 
-            ############################################################################################
+            # ------------------------------- MEMORY TAB ---------------------------------------------#
             # update memory usage
             update_monitoring_info(memory_usage, memory_curve, task_manager.get_memory_usage())
             # update memory stats
@@ -138,17 +184,29 @@ def update_plots(cpu_tab, memory_tab, partitions_tab, network_tab, cpu_usage, me
             memory_tab.layout.itemAt(3).widget().setText("In use memory: " + str(memory_stats[3]) + " GB")
             memory_tab.layout.itemAt(4).widget().setText("Memory usage: " + str(memory_stats[4]) + "%")
 
-            ############################################################################################
+            # ------------------------------- DISK TAB ---------------------------------------------#
             # update partitions usage
             partitions_info = task_manager.get_partitions_info()
             disk_plot.update()
             update_partitions_info(disk_plot, partitions_info)
 
-            ############################################################################################
+            # update partitions stats
+            for index, partition in enumerate(partitions_info):
+                partition_layout = partitions_tab.layout.itemAt(index + 1).layout()
+                partition_layout.itemAt(1).widget().setText("Total size: " + str(partition[1]) + " GB")
+                partition_layout.itemAt(2).widget().setText("Used size: " + str(partition[2]) + " GB")
+                partition_layout.itemAt(3).widget().setText("Free size: " + str(partition[3]) + " GB")
+                partition_layout.itemAt(4).widget().setText("Usage: " + str(partition[4]) + "%")
+
+            # ------------------------------- NETWORK TAB ---------------------------------------------#
             # update network usage
             network_info = task_manager.get_network_usage()
             update_monitoring_info(network_sent_usage, network_sent_curve, network_info[0])
             update_monitoring_info(network_received_usage, network_received_curve, network_info[1])
+
+            # update network stats
+            network_tab.layout.itemAt(1).widget().setText("Sent (YELLOW): " + str(network_info[0]) + " MB")
+            network_tab.layout.itemAt(2).widget().setText("Received (GREEN) : " + str(network_info[1]) + " MB")
 
             ############################################################################################
             app.processEvents()
@@ -173,7 +231,6 @@ def main():
     # add tabs for each resource
     tabs = QtWidgets.QTabWidget()
 
-    # add a tab for cpu with 2 layouts
     cpu_tab = QtWidgets.QWidget()
     tabs.addTab(cpu_tab, "CPU")
 
