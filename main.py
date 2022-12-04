@@ -1,3 +1,6 @@
+import csv
+from datetime import datetime
+
 from PyQt5.QtChart import QChart, QPieSeries, QPieSlice
 import threading
 from TaskManager import TaskManager
@@ -158,18 +161,40 @@ def update_plots(cpu_tab, memory_tab, partitions_tab, network_tab, cpu_usage, me
                  network_sent_usage, network_received_usage, task_manager,
                  cpu_curve,
                  memory_curve, network_sent_curve, network_received_curve, app):
+    # csv files for saving resource usage
+    cpu_csv_file = open("cpu_stats.csv", "a")
+    cpu_csv_writer = csv.writer(cpu_csv_file)
+
+    memory_csv_file = open("memory_stats.csv", "a")
+    memory_csv_writer = csv.writer(memory_csv_file)
+
+    disk_csv_file = open("disk_stats.csv", "a")
+    disk_csv_writer = csv.writer(disk_csv_file)
+
+    network_csv_file = open("network_stats.csv", "a")
+    network_csv_writer = csv.writer(network_csv_file)
+
     while True:
+        # current time
+        current_time = datetime.now().strftime("%H:%M:%S")
         try:
             #######################################################################################
             # ------------------------------- CPU TAB ---------------------------------------------#
             # update cpu usage
             update_monitoring_info(cpu_usage, cpu_curve, task_manager.get_cpu_usage())
-            # get cpu per core
+            # update cpu stats
             cpu_core_string = ""
             for index, cpu_per_core in enumerate(task_manager.get_cpu_per_core()):
+                # save cpu stats in csv file
+                if index % 12 == 0:
+                    cpu_csv_writer.writerow([f"#################### CPU STATS {current_time} ####################"])
+                cpu_csv_writer.writerow(["CPU", "Core " + str(index), str(cpu_per_core) + "%"])
+
+                # create a string to display cpu stats
                 if index % 3 == 0:
                     cpu_core_string += "\n"
                 cpu_core_string += "Core " + str(index) + ": " + str(cpu_per_core) + "%\t"
+
             # update label
             cpu_tab.layout.itemAt(6).widget().setText("CPU cores usage: " + cpu_core_string)
 
@@ -183,6 +208,13 @@ def update_plots(cpu_tab, memory_tab, partitions_tab, network_tab, cpu_usage, me
             memory_tab.layout.itemAt(2).widget().setText("Available memory: " + str(memory_stats[1]) + " GB")
             memory_tab.layout.itemAt(3).widget().setText("In use memory: " + str(memory_stats[3]) + " GB")
             memory_tab.layout.itemAt(4).widget().setText("Memory usage: " + str(memory_stats[4]) + "%")
+
+            # save memory stats in csv file
+            memory_csv_writer.writerow([f"#################### MEMORY STATS {current_time} ####################"])
+            memory_csv_writer.writerow(["Total memory", str(memory_stats[0]) + " GB"])
+            memory_csv_writer.writerow(["Available memory", str(memory_stats[1]) + " GB"])
+            memory_csv_writer.writerow(["In use memory", str(memory_stats[3]) + " GB"])
+            memory_csv_writer.writerow(["Memory usage", str(memory_stats[4]) + "%"])
 
             # ------------------------------- DISK TAB ---------------------------------------------#
             # update partitions usage
@@ -198,6 +230,16 @@ def update_plots(cpu_tab, memory_tab, partitions_tab, network_tab, cpu_usage, me
                 partition_layout.itemAt(3).widget().setText("Free size: " + str(partition[3]) + " GB")
                 partition_layout.itemAt(4).widget().setText("Usage: " + str(partition[4]) + "%")
 
+                # save disk stats in csv file
+                if index % 5 == 0:
+                    disk_csv_writer.writerow([f"#################### DISK STATS {current_time} ####################"])
+                disk_csv_writer.writerow(["Partition", partition[0]])
+                disk_csv_writer.writerow(["Total size", str(partition[1]) + " GB"])
+                disk_csv_writer.writerow(["Used size", str(partition[2]) + " GB"])
+                disk_csv_writer.writerow(["Free size", str(partition[3]) + " GB"])
+                disk_csv_writer.writerow(["Usage", str(partition[4]) + "%"])
+                disk_csv_writer.writerow(["---------------"])
+
             # ------------------------------- NETWORK TAB ---------------------------------------------#
             # update network usage
             network_info = task_manager.get_network_usage()
@@ -208,11 +250,22 @@ def update_plots(cpu_tab, memory_tab, partitions_tab, network_tab, cpu_usage, me
             network_tab.layout.itemAt(1).widget().setText("Sent (YELLOW): " + str(network_info[0]) + " MB")
             network_tab.layout.itemAt(2).widget().setText("Received (GREEN) : " + str(network_info[1]) + " MB")
 
+            # save network stats in csv file
+            network_csv_writer.writerow([f"#################### NETWORK STATS {current_time} ####################"])
+            network_csv_writer.writerow(["Sent", str(network_info[0]) + " MB"])
+            network_csv_writer.writerow(["Received", str(network_info[1]) + " MB"])
+
             ############################################################################################
             app.processEvents()
 
         except Exception as e:
             print(e)
+
+            cpu_csv_file.close()
+            memory_csv_file.close()
+            disk_csv_file.close()
+            network_csv_file.close()
+
             break
 
 
