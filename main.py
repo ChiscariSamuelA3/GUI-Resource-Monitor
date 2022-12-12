@@ -99,6 +99,30 @@ def create_network_stats(tab):
     tab.layout.addWidget(network_recv_label, alignment=QtCore.Qt.AlignCenter)
 
 
+def clear_history(tab_type):
+    current_time = datetime.now().strftime("%d-%m-%Y_%H-%M-%S")
+    if tab_type == 0:  # cpu
+        # clear cpu_stats.csv
+        with open('cpu_stats.csv', 'w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(["cpu stats deleted", current_time])
+    elif tab_type == 1:  # memory
+        # clear memory_stats.csv
+        with open('memory_stats.csv', 'w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(["memory stats deleted", current_time])
+    elif tab_type == 2:  # disk
+        # clear disk_stats.csv
+        with open('disk_stats.csv', 'w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(["disk stats deleted", current_time])
+    elif tab_type == 3:  # network
+        # clear network_stats.csv
+        with open('network_stats.csv', 'w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(["network stats deleted", current_time])
+
+
 def init_tab_layout(tab: QtWidgets.QWidget, resource_plot, tab_type):
     tab.layout = QtWidgets.QVBoxLayout()
     tab.layout.addWidget(resource_plot)
@@ -116,6 +140,11 @@ def init_tab_layout(tab: QtWidgets.QWidget, resource_plot, tab_type):
     # noinspection PyUnresolvedReferences
     export_button.clicked.connect(lambda: export_chart(tab_type, resource_plot))
     tab.layout.addWidget(export_button, alignment=QtCore.Qt.AlignCenter)
+
+    clear_button = QtWidgets.QPushButton("Clear history")
+    # noinspection PyUnresolvedReferences
+    clear_button.clicked.connect(lambda: clear_history(tab_type))
+    tab.layout.addWidget(clear_button, alignment=QtCore.Qt.AlignCenter)
 
     tab.setLayout(tab.layout)
 
