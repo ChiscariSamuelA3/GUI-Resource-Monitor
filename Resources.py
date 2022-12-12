@@ -1,5 +1,8 @@
 import pyqtgraph as pg
 import pyqtgraph.exporters
+from PyQt5.QtGui import QPainter
+from PyQt5.QtPrintSupport import QPrinter
+
 from TaskManager import *
 
 
@@ -65,20 +68,60 @@ def add_new_network_stats(network_tab, network_csv_writer, current_time, network
     network_csv_writer.writerow(["Received", str(network_info[1]) + " MB"])
 
 
+def get_pdf_printer(name):
+    printer = QPrinter()
+    printer.setOutputFormat(QPrinter.PdfFormat)
+    printer.setOutputFileName(name)
+    printer.setPaperSize(QPrinter.A4)
+    printer.setPageMargins(0, 0, 0, 0, QPrinter.Millimeter)
+    printer.setFullPage(True)
+
+    return printer
+
+
+def launch_pdf_exporter(resource_plot, printer):
+    painter = QPainter()
+    painter.begin(printer)
+    resource_plot.plotItem.scene().render(painter)
+    painter.end()
+
+
 def export_chart(tab_type, resource_plot):
     print("Exporting chart...")
 
     if tab_type == 0:
+        # export as jpeg
         exporter = pg.exporters.ImageExporter(resource_plot.plotItem)
         exporter.export("cpu_chart.jpeg")
+
+        # export as pdf
+        printer = get_pdf_printer("cpu_chart.pdf")
+        launch_pdf_exporter(resource_plot, printer)
     elif tab_type == 1:
+        # export as jpeg
         exporter = pg.exporters.ImageExporter(resource_plot.plotItem)
         exporter.export("memory_chart.jpeg")
+
+        # export as pdf
+        printer = get_pdf_printer("memory_chart.pdf")
+        launch_pdf_exporter(resource_plot, printer)
     elif tab_type == 2:
-        # exporting QChartView
+        # exporting QChartView as jpeg
         resource_plot.grab().save("disk_chart.jpeg")
+
+        # exporting QChartView as pdf
+        printer = get_pdf_printer("disk_chart.pdf")
+        painter = QPainter()
+        painter.begin(printer)
+        resource_plot.render(painter)
+        painter.end()
     elif tab_type == 3:
+        # export as jpeg
         exporter = pg.exporters.ImageExporter(resource_plot.plotItem)
         exporter.export("network_chart.jpeg")
+
+        # export as pdf
+        printer = get_pdf_printer("network_chart.pdf")
+        launch_pdf_exporter(resource_plot, printer)
 
     print("Chart exported!")

@@ -100,27 +100,27 @@ def create_network_stats(tab):
 
 
 def clear_history(tab_type):
-    current_time = datetime.now().strftime("%d-%m-%Y_%H-%M-%S")
+    current_time = datetime.now().strftime("%d-%m-%Y_%H:%M:%S")
     if tab_type == 0:  # cpu
         # clear cpu_stats.csv
         with open('cpu_stats.csv', 'w', newline='') as file:
             writer = csv.writer(file)
-            writer.writerow(["cpu stats deleted", current_time])
+            writer.writerow(["deleted cpu stats", current_time])
     elif tab_type == 1:  # memory
         # clear memory_stats.csv
         with open('memory_stats.csv', 'w', newline='') as file:
             writer = csv.writer(file)
-            writer.writerow(["memory stats deleted", current_time])
+            writer.writerow(["deleted memory stats", current_time])
     elif tab_type == 2:  # disk
         # clear disk_stats.csv
         with open('disk_stats.csv', 'w', newline='') as file:
             writer = csv.writer(file)
-            writer.writerow(["disk stats deleted", current_time])
+            writer.writerow(["deleted disk stats", current_time])
     elif tab_type == 3:  # network
         # clear network_stats.csv
         with open('network_stats.csv', 'w', newline='') as file:
             writer = csv.writer(file)
-            writer.writerow(["network stats deleted", current_time])
+            writer.writerow(["deleted network stats", current_time])
 
 
 def init_tab_layout(tab: QtWidgets.QWidget, resource_plot, tab_type):
