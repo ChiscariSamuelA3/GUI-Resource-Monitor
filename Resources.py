@@ -7,6 +7,13 @@ from TaskManager import *
 
 
 def add_new_cpu_stats(cpu_tab, cpu_csv_writer, current_time):
+    """
+    Add new cpu stats to the cpu tab and save them in a csv file with the current time as a separator
+    :param cpu_tab: the cpu tab of the application (QTabWidget) to add the stats to it
+    :param cpu_csv_writer: the csv writer to save the stats in a csv file
+    :param current_time: the current time to add it as a separator in the csv file
+    :return:
+    """
     cpu_core_string = ""
     for index, cpu_per_core in enumerate(get_cpu_per_core()):
         # save cpu stats in csv file
@@ -24,6 +31,13 @@ def add_new_cpu_stats(cpu_tab, cpu_csv_writer, current_time):
 
 
 def add_new_memory_stats(memory_tab, memory_csv_writer, current_time):
+    """
+    Add new memory stats to the memory tab and save them in a csv file with the current time as a separator
+    :param memory_tab: the memory tab of the application (QTabWidget) to add the stats to it
+    :param memory_csv_writer: the csv writer to save the stats in a csv file
+    :param current_time: the current time to add it as a separator in the csv file
+    :return:
+    """
     memory_stats = get_memory_stats()
     memory_stats = [round(x / (1024 ** 3), 2) for x in memory_stats]
     memory_tab.layout.itemAt(1).widget().setText("Total memory: " + str(memory_stats[0]) + " GB")
@@ -40,6 +54,14 @@ def add_new_memory_stats(memory_tab, memory_csv_writer, current_time):
 
 
 def add_new_partitions_stats(partitions_tab, disk_csv_writer, current_time, partitions_info):
+    """
+    Add new partitions stats to the partitions tab and save them in a csv file with the current time as a separator
+    :param partitions_tab: the partitions tab of the application (QTabWidget) to add the stats to it
+    :param disk_csv_writer: the csv writer to save the stats in a csv file
+    :param current_time: the current time to add it as a separator in the csv file
+    :param partitions_info: the partitions info to add to the partitions tab (list of tuples)
+    :return:
+    """
     for index, partition in enumerate(partitions_info):
         partition_layout = partitions_tab.layout.itemAt(index + 1).layout()
         partition_layout.itemAt(1).widget().setText("Total size: " + str(partition[1]) + " GB")
@@ -59,6 +81,14 @@ def add_new_partitions_stats(partitions_tab, disk_csv_writer, current_time, part
 
 
 def add_new_network_stats(network_tab, network_csv_writer, current_time, network_info):
+    """
+    Add new network stats to the network tab and save them in a csv file with the current time as a separator
+    :param network_tab: the network tab of the application (QTabWidget) to add the stats to it
+    :param network_csv_writer: the csv writer to save the stats in a csv file
+    :param current_time: the current time to add it as a separator in the csv file
+    :param network_info: the network info to add to the network tab (list of tuples)
+    :return:
+    """
     network_tab.layout.itemAt(1).widget().setText("Sent (YELLOW): " + str(network_info[0]) + " MB")
     network_tab.layout.itemAt(2).widget().setText("Received (GREEN) : " + str(network_info[1]) + " MB")
 
@@ -69,6 +99,11 @@ def add_new_network_stats(network_tab, network_csv_writer, current_time, network
 
 
 def get_pdf_printer(name):
+    """
+    Create and Get the pdf printer with the given name
+    :param name: the name of the pdf printer to get (str)
+    :return: the pdf printer with the given name (QPrinter)
+    """
     printer = QPrinter()
     printer.setOutputFormat(QPrinter.PdfFormat)
     printer.setOutputFileName(name)
@@ -80,6 +115,12 @@ def get_pdf_printer(name):
 
 
 def launch_pdf_exporter(resource_plot, printer):
+    """
+    Launch the pdf exporter to export the given resource plot to a pdf file
+    :param resource_plot: the resource plot to export to a pdf file
+    :param printer: the pdf printer to use to export the resource plot to a pdf file
+    :return:
+    """
     painter = QPainter()
     painter.begin(printer)
     resource_plot.plotItem.scene().render(painter)
@@ -87,6 +128,12 @@ def launch_pdf_exporter(resource_plot, printer):
 
 
 def export_chart(tab_type, resource_plot):
+    """
+    Export the given resource plot to a pdf file and a jpeg file
+    :param tab_type: the type of the tab to export the resource plot to a pdf file and a jpeg file (str)
+    :param resource_plot: the resource plot to export to a pdf file and a jpeg file
+    :return:
+    """
     print("Exporting chart...")
 
     if tab_type == 0:

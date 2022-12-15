@@ -2,12 +2,20 @@ import csv
 from datetime import datetime
 from PyQt5.QtChart import QChart, QPieSeries, QPieSlice
 import threading
-from Resources import *
 from PyQt5 import QtWidgets, QtChart, QtCore
-import pyqtgraph as pg
+
+from Resources import *
 
 
 def init_tab_content(x_range, y_range, x_label, y_label):
+    """
+    Initialize tab content with chart and curve for resource usage monitoring (CPU, memory, network)
+    :param x_range: x range
+    :param y_range: y range
+    :param x_label: x label
+    :param y_label: y label
+    :return: chart, curve
+    """
     resource_plot = pg.plot()
     resource_plot.showGrid(x=True, y=True)
     resource_plot.setYRange(y_range[0], y_range[1])
@@ -19,6 +27,13 @@ def init_tab_content(x_range, y_range, x_label, y_label):
 
 
 def create_cpu_stats(tab):
+    """
+    Create CPU stats tab content (chart, curve, labels) and start monitoring. CPU usage is updated every 1 second with
+    percentages per core, physical and logical core, cpu max, min and current frequency
+    :param tab: tab widget to add
+    cpu stats to
+    :return:
+    """
     cpu_physical_cores, cpu_logical_cores = get_cpu_count()
 
     physical_cores_label = QtWidgets.QLabel("Physical cores: " + str(cpu_physical_cores))
@@ -46,6 +61,12 @@ def create_cpu_stats(tab):
 
 
 def create_memory_stats(tab):
+    """
+    Create memory stats tab content (chart, curve, labels) and start monitoring. Memory usage is updated every 1 second
+    with memory usage in percent (total, available, used, free)
+    :param tab: tab widget to add memory stats to
+    :return:
+    """
     # get memory info in gb
     memory_stats = get_memory_stats()
     memory_stats = [round(x / (1024 ** 3), 2) for x in memory_stats]
@@ -61,6 +82,12 @@ def create_memory_stats(tab):
 
 
 def create_partitions_stats(tab):
+    """
+    Create partitions stats tab content (chart, curve, labels) and start monitoring
+    Partitions usage is updated every 1 second with partitions usage in percent for each partition
+    :param tab: tab widget to add partitions stats to
+    :return:
+    """
     partitions_info = get_partitions_info()
 
     for partition in partitions_info:
@@ -91,6 +118,12 @@ def create_partitions_stats(tab):
 
 
 def create_network_stats(tab):
+    """
+    Create network stats tab content (chart, curve, labels) and start monitoring. Network usage is updated every 1
+    second with network sent and received bytes
+    :param tab: tab widget to add network stats to
+    :return:
+    """
     network_stats = get_network_usage()
 
     network_sent_label = QtWidgets.QLabel("Sent: (YELLOW) " + str(network_stats[0]) + " MB")
@@ -100,6 +133,11 @@ def create_network_stats(tab):
 
 
 def clear_history(tab_type):
+    """
+    Clear history csv file for tab type
+    :param tab_type: tab type to clear history for
+    :return:
+    """
     current_time = datetime.now().strftime("%d-%m-%Y_%H:%M:%S")
     if tab_type == 0:  # cpu
         # clear cpu_stats.csv
@@ -124,6 +162,13 @@ def clear_history(tab_type):
 
 
 def init_tab_layout(tab: QtWidgets.QWidget, resource_plot, tab_type):
+    """
+    Initialize tab layout with chart, curve, labels and start monitoring
+    :param tab: tab widget to initialize
+    :param resource_plot: chart to add to tab layout
+    :param tab_type: tab type to initialize (cpu, memory, disk, network)
+    :return:
+    """
     tab.layout = QtWidgets.QVBoxLayout()
     tab.layout.addWidget(resource_plot)
 
@@ -150,6 +195,12 @@ def init_tab_layout(tab: QtWidgets.QWidget, resource_plot, tab_type):
 
 
 def update_partitions_info(disk_plot, partitions_info):
+    """
+    Update partitions info (chart, curve, labels)
+    :param disk_plot: chart to update
+    :param partitions_info: partitions info to update chart with
+    :return:
+    """
     total_disk_space = 0
     for partition in partitions_info:
         total_disk_space += partition[1]
@@ -183,6 +234,13 @@ def update_partitions_info(disk_plot, partitions_info):
 
 
 def update_monitoring_info(resource_usage, resource_curve, resource_value):
+    """
+    Update monitoring info (chart, curve, labels) for cpu, memory, network
+    :param resource_usage: resource usage to update chart with
+    :param resource_curve: chart curve to update
+    :param resource_value: label to update with resource usage value
+    :return:
+    """
     if len(resource_usage) > 60:
         resource_usage.pop(0)
 
@@ -193,6 +251,24 @@ def update_monitoring_info(resource_usage, resource_curve, resource_value):
 def update_plots(cpu_tab, memory_tab, partitions_tab, network_tab, cpu_usage, memory_usage, disk_plot,
                  network_sent_usage, network_received_usage, cpu_curve,
                  memory_curve, network_sent_curve, network_received_curve, app):
+    """
+    Update charts, curves, labels and start monitoring
+    :param cpu_tab: cpu tab widget to update
+    :param memory_tab: memory tab widget to update
+    :param partitions_tab: disk tab widget to update
+    :param network_tab: network tab widget to update
+    :param cpu_usage: cpu usage to update chart with
+    :param memory_usage: memory usage to update chart with
+    :param disk_plot: disk chart to update
+    :param network_sent_usage: network sent usage to update chart with
+    :param network_received_usage: network received usage to update chart with
+    :param cpu_curve: cpu chart curve to update
+    :param memory_curve: memory chart curve to update
+    :param network_sent_curve: network sent chart curve to update
+    :param network_received_curve: network received chart curve to update
+    :param app: application to process events
+    :return:
+    """
     # csv files for saving resource usage
     cpu_csv_file = open("cpu_stats.csv", "a")
     cpu_csv_writer = csv.writer(cpu_csv_file)
@@ -258,6 +334,10 @@ def update_plots(cpu_tab, memory_tab, partitions_tab, network_tab, cpu_usage, me
 
 
 def main():
+    """
+    Main function to run the application
+    :return:
+    """
     cpu_usage = []
     memory_usage = []
     network_sent_usage = []
