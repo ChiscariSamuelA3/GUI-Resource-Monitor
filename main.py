@@ -141,22 +141,22 @@ def clear_history(tab_type):
     current_time = datetime.now().strftime("%d-%m-%Y_%H:%M:%S")
     if tab_type == 0:  # cpu
         # clear cpu_stats.csv
-        with open('cpu_stats.csv', 'w', newline='') as file:
+        with open('history/cpu_stats.csv', 'w', newline='') as file:
             writer = csv.writer(file)
             writer.writerow(["deleted cpu stats", current_time])
     elif tab_type == 1:  # memory
         # clear memory_stats.csv
-        with open('memory_stats.csv', 'w', newline='') as file:
+        with open('history/memory_stats.csv', 'w', newline='') as file:
             writer = csv.writer(file)
             writer.writerow(["deleted memory stats", current_time])
     elif tab_type == 2:  # disk
         # clear disk_stats.csv
-        with open('disk_stats.csv', 'w', newline='') as file:
+        with open('history/disk_stats.csv', 'w', newline='') as file:
             writer = csv.writer(file)
             writer.writerow(["deleted disk stats", current_time])
     elif tab_type == 3:  # network
         # clear network_stats.csv
-        with open('network_stats.csv', 'w', newline='') as file:
+        with open('history/network_stats.csv', 'w', newline='') as file:
             writer = csv.writer(file)
             writer.writerow(["deleted network stats", current_time])
 
@@ -270,16 +270,16 @@ def update_plots(cpu_tab, memory_tab, partitions_tab, network_tab, cpu_usage, me
     :return:
     """
     # csv files for saving resource usage
-    cpu_csv_file = open("cpu_stats.csv", "a")
+    cpu_csv_file = open("history/cpu_stats.csv", "a")
     cpu_csv_writer = csv.writer(cpu_csv_file)
 
-    memory_csv_file = open("memory_stats.csv", "a")
+    memory_csv_file = open("history/memory_stats.csv", "a")
     memory_csv_writer = csv.writer(memory_csv_file)
 
-    disk_csv_file = open("disk_stats.csv", "a")
+    disk_csv_file = open("history/disk_stats.csv", "a")
     disk_csv_writer = csv.writer(disk_csv_file)
 
-    network_csv_file = open("network_stats.csv", "a")
+    network_csv_file = open("history/network_stats.csv", "a")
     network_csv_writer = csv.writer(network_csv_file)
 
     while True:
