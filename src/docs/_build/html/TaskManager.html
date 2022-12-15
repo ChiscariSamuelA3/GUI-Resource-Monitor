@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TaskManager module &mdash; GUI Resource Monitor 1.0.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> GUI Resource Monitor
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">TaskManager module</a><ul>
+<li><a class="reference internal" href="#TaskManager.get_cpu_count"><code class="docutils literal notranslate"><span class="pre">get_cpu_count()</span></code></a></li>
+<li><a class="reference internal" href="#TaskManager.get_cpu_freq"><code class="docutils literal notranslate"><span class="pre">get_cpu_freq()</span></code></a></li>
+<li><a class="reference internal" href="#TaskManager.get_cpu_per_core"><code class="docutils literal notranslate"><span class="pre">get_cpu_per_core()</span></code></a></li>
+<li><a class="reference internal" href="#TaskManager.get_cpu_usage"><code class="docutils literal notranslate"><span class="pre">get_cpu_usage()</span></code></a></li>
+<li><a class="reference internal" href="#TaskManager.get_memory_stats"><code class="docutils literal notranslate"><span class="pre">get_memory_stats()</span></code></a></li>
+<li><a class="reference internal" href="#TaskManager.get_memory_usage"><code class="docutils literal notranslate"><span class="pre">get_memory_usage()</span></code></a></li>
+<li><a class="reference internal" href="#TaskManager.get_network_usage"><code class="docutils literal notranslate"><span class="pre">get_network_usage()</span></code></a></li>
+<li><a class="reference internal" href="#TaskManager.get_partitions_info"><code class="docutils literal notranslate"><span class="pre">get_partitions_info()</span></code></a></li>
+<li><a class="reference internal" href="#TaskManager.get_total_memory"><code class="docutils literal notranslate"><span class="pre">get_total_memory()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">GUI Resource Monitor</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">TaskManager module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/TaskManager.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-TaskManager">
+<span id="taskmanager-module"></span><h1>TaskManager module<a class="headerlink" href="#module-TaskManager" title="Permalink to this heading"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="TaskManager.get_cpu_count">
+<span class="sig-prename descclassname"><span class="pre">TaskManager.</span></span><span class="sig-name descname"><span class="pre">get_cpu_count</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/TaskManager.html#get_cpu_count"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#TaskManager.get_cpu_count" title="Permalink to this definition"></a></dt>
+<dd><p>Get the number of logical CPUs in the system
+:return: number of logical CPUs in the system</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="TaskManager.get_cpu_freq">
+<span class="sig-prename descclassname"><span class="pre">TaskManager.</span></span><span class="sig-name descname"><span class="pre">get_cpu_freq</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/TaskManager.html#get_cpu_freq"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#TaskManager.get_cpu_freq" title="Permalink to this definition"></a></dt>
+<dd><p>Get the current CPU frequency as a float in Mhz for each CPU core in the system.
+:return: current CPU frequency as a float in Mhz for each CPU core in the system</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="TaskManager.get_cpu_per_core">
+<span class="sig-prename descclassname"><span class="pre">TaskManager.</span></span><span class="sig-name descname"><span class="pre">get_cpu_per_core</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/TaskManager.html#get_cpu_per_core"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#TaskManager.get_cpu_per_core" title="Permalink to this definition"></a></dt>
+<dd><p>Get the current CPU usage as a float in percentage for each CPU core in the system. The values are updated every
+0.5 seconds.
+:return: current CPU usage as a float in percentage for each CPU core in the system</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="TaskManager.get_cpu_usage">
+<span class="sig-prename descclassname"><span class="pre">TaskManager.</span></span><span class="sig-name descname"><span class="pre">get_cpu_usage</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/TaskManager.html#get_cpu_usage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#TaskManager.get_cpu_usage" title="Permalink to this definition"></a></dt>
+<dd><p>Get the current CPU usage as a float in percentage for the whole system. The values are updated every 0.5 seconds.
+:return: current CPU usage as a float in percentage for the whole system</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="TaskManager.get_memory_stats">
+<span class="sig-prename descclassname"><span class="pre">TaskManager.</span></span><span class="sig-name descname"><span class="pre">get_memory_stats</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/TaskManager.html#get_memory_stats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#TaskManager.get_memory_stats" title="Permalink to this definition"></a></dt>
+<dd><p>Get the current memory usage as a float in percentage for the whole system.
+:return: current memory usage as a float in percentage for the whole system</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="TaskManager.get_memory_usage">
+<span class="sig-prename descclassname"><span class="pre">TaskManager.</span></span><span class="sig-name descname"><span class="pre">get_memory_usage</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/TaskManager.html#get_memory_usage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#TaskManager.get_memory_usage" title="Permalink to this definition"></a></dt>
+<dd><p>Get the current memory usage as a float in percentage for the whole system.
+:return: current memory usage as a float in percentage for the whole system</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="TaskManager.get_network_usage">
+<span class="sig-prename descclassname"><span class="pre">TaskManager.</span></span><span class="sig-name descname"><span class="pre">get_network_usage</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/TaskManager.html#get_network_usage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#TaskManager.get_network_usage" title="Permalink to this definition"></a></dt>
+<dd><p>Get the current network usage including bytes sent and received for the whole system in kb/s.
+:return: current network usage including bytes sent and received for the whole system</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="TaskManager.get_partitions_info">
+<span class="sig-prename descclassname"><span class="pre">TaskManager.</span></span><span class="sig-name descname"><span class="pre">get_partitions_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/TaskManager.html#get_partitions_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#TaskManager.get_partitions_info" title="Permalink to this definition"></a></dt>
+<dd><p>Get the disk partitions information. The information is a list of named tuples including name and mounts
+information.
+:return: disk partitions information with mount points in GB</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="TaskManager.get_total_memory">
+<span class="sig-prename descclassname"><span class="pre">TaskManager.</span></span><span class="sig-name descname"><span class="pre">get_total_memory</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/TaskManager.html#get_total_memory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#TaskManager.get_total_memory" title="Permalink to this definition"></a></dt>
+<dd><p>Get the total memory in the system in GB.
+:return: total memory in the system in GB</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Samuel Chiscari.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

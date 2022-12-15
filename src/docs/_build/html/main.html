@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>main module &mdash; GUI Resource Monitor 1.0.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> GUI Resource Monitor
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">main module</a><ul>
+<li><a class="reference internal" href="#main.clear_history"><code class="docutils literal notranslate"><span class="pre">clear_history()</span></code></a></li>
+<li><a class="reference internal" href="#main.create_cpu_stats"><code class="docutils literal notranslate"><span class="pre">create_cpu_stats()</span></code></a></li>
+<li><a class="reference internal" href="#main.create_memory_stats"><code class="docutils literal notranslate"><span class="pre">create_memory_stats()</span></code></a></li>
+<li><a class="reference internal" href="#main.create_network_stats"><code class="docutils literal notranslate"><span class="pre">create_network_stats()</span></code></a></li>
+<li><a class="reference internal" href="#main.create_partitions_stats"><code class="docutils literal notranslate"><span class="pre">create_partitions_stats()</span></code></a></li>
+<li><a class="reference internal" href="#main.init_tab_content"><code class="docutils literal notranslate"><span class="pre">init_tab_content()</span></code></a></li>
+<li><a class="reference internal" href="#main.init_tab_layout"><code class="docutils literal notranslate"><span class="pre">init_tab_layout()</span></code></a></li>
+<li><a class="reference internal" href="#main.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li><a class="reference internal" href="#main.update_monitoring_info"><code class="docutils literal notranslate"><span class="pre">update_monitoring_info()</span></code></a></li>
+<li><a class="reference internal" href="#main.update_partitions_info"><code class="docutils literal notranslate"><span class="pre">update_partitions_info()</span></code></a></li>
+<li><a class="reference internal" href="#main.update_plots"><code class="docutils literal notranslate"><span class="pre">update_plots()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">GUI Resource Monitor</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">main module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/main.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-main">
+<span id="main-module"></span><h1>main module<a class="headerlink" href="#module-main" title="Permalink to this heading"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="main.clear_history">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">clear_history</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tab_type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#clear_history"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main.clear_history" title="Permalink to this definition"></a></dt>
+<dd><p>Clear history csv file for tab type
+:param tab_type: tab type to clear history for
+:return:</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main.create_cpu_stats">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">create_cpu_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tab</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#create_cpu_stats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main.create_cpu_stats" title="Permalink to this definition"></a></dt>
+<dd><p>Create CPU stats tab content (chart, curve, labels) and start monitoring. CPU usage is updated every 1 second with
+percentages per core, physical and logical core, cpu max, min and current frequency
+:param tab: tab widget to add
+cpu stats to
+:return:</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main.create_memory_stats">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">create_memory_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tab</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#create_memory_stats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main.create_memory_stats" title="Permalink to this definition"></a></dt>
+<dd><p>Create memory stats tab content (chart, curve, labels) and start monitoring. Memory usage is updated every 1 second
+with memory usage in percent (total, available, used, free)
+:param tab: tab widget to add memory stats to
+:return:</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main.create_network_stats">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">create_network_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tab</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#create_network_stats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main.create_network_stats" title="Permalink to this definition"></a></dt>
+<dd><p>Create network stats tab content (chart, curve, labels) and start monitoring. Network usage is updated every 1
+second with network sent and received bytes
+:param tab: tab widget to add network stats to
+:return:</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main.create_partitions_stats">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">create_partitions_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tab</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#create_partitions_stats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main.create_partitions_stats" title="Permalink to this definition"></a></dt>
+<dd><p>Create partitions stats tab content (chart, curve, labels) and start monitoring
+Partitions usage is updated every 1 second with partitions usage in percent for each partition
+:param tab: tab widget to add partitions stats to
+:return:</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main.init_tab_content">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">init_tab_content</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_label</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#init_tab_content"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main.init_tab_content" title="Permalink to this definition"></a></dt>
+<dd><p>Initialize tab content with chart and curve for resource usage monitoring (CPU, memory, network)
+:param x_range: x range
+:param y_range: y range
+:param x_label: x label
+:param y_label: y label
+:return: chart, curve</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main.init_tab_layout">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">init_tab_layout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tab</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QWidget</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resource_plot</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tab_type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#init_tab_layout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main.init_tab_layout" title="Permalink to this definition"></a></dt>
+<dd><p>Initialize tab layout with chart, curve, labels and start monitoring
+:param tab: tab widget to initialize
+:param resource_plot: chart to add to tab layout
+:param tab_type: tab type to initialize (cpu, memory, disk, network)
+:return:</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main.main">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main.main" title="Permalink to this definition"></a></dt>
+<dd><p>Main function to run the application
+:return:</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main.update_monitoring_info">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">update_monitoring_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">resource_usage</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resource_curve</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resource_value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#update_monitoring_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main.update_monitoring_info" title="Permalink to this definition"></a></dt>
+<dd><p>Update monitoring info (chart, curve, labels) for cpu, memory, network
+:param resource_usage: resource usage to update chart with
+:param resource_curve: chart curve to update
+:param resource_value: label to update with resource usage value
+:return:</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main.update_partitions_info">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">update_partitions_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">disk_plot</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partitions_info</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#update_partitions_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main.update_partitions_info" title="Permalink to this definition"></a></dt>
+<dd><p>Update partitions info (chart, curve, labels)
+:param disk_plot: chart to update
+:param partitions_info: partitions info to update chart with
+:return:</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main.update_plots">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">update_plots</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cpu_tab</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory_tab</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partitions_tab</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">network_tab</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cpu_usage</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory_usage</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disk_plot</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">network_sent_usage</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">network_received_usage</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cpu_curve</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory_curve</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">network_sent_curve</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">network_received_curve</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#update_plots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main.update_plots" title="Permalink to this definition"></a></dt>
+<dd><p>Update charts, curves, labels and start monitoring
+:param cpu_tab: cpu tab widget to update
+:param memory_tab: memory tab widget to update
+:param partitions_tab: disk tab widget to update
+:param network_tab: network tab widget to update
+:param cpu_usage: cpu usage to update chart with
+:param memory_usage: memory usage to update chart with
+:param disk_plot: disk chart to update
+:param network_sent_usage: network sent usage to update chart with
+:param network_received_usage: network received usage to update chart with
+:param cpu_curve: cpu chart curve to update
+:param memory_curve: memory chart curve to update
+:param network_sent_curve: network sent chart curve to update
+:param network_received_curve: network received chart curve to update
+:param app: application to process events
+:return:</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Samuel Chiscari.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

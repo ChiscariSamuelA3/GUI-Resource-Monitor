@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resources &mdash; GUI Resource Monitor 1.0.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> GUI Resource Monitor
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">GUI Resource Monitor</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">Resources</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for Resources</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">pyqtgraph</span> <span class="k">as</span> <span class="nn">pg</span>
+<span class="kn">import</span> <span class="nn">pyqtgraph.exporters</span>
+<span class="kn">from</span> <span class="nn">PyQt5.QtGui</span> <span class="kn">import</span> <span class="n">QPainter</span>
+<span class="kn">from</span> <span class="nn">PyQt5.QtPrintSupport</span> <span class="kn">import</span> <span class="n">QPrinter</span>
+
+<span class="kn">from</span> <span class="nn">TaskManager</span> <span class="kn">import</span> <span class="o">*</span>
+
+
+<div class="viewcode-block" id="add_new_cpu_stats"><a class="viewcode-back" href="../Resources.html#Resources.add_new_cpu_stats">[docs]</a><span class="k">def</span> <span class="nf">add_new_cpu_stats</span><span class="p">(</span><span class="n">cpu_tab</span><span class="p">,</span> <span class="n">cpu_csv_writer</span><span class="p">,</span> <span class="n">current_time</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Add new cpu stats to the cpu tab and save them in a csv file with the current time as a separator</span>
+<span class="sd">    :param cpu_tab: the cpu tab of the application (QTabWidget) to add the stats to it</span>
+<span class="sd">    :param cpu_csv_writer: the csv writer to save the stats in a csv file</span>
+<span class="sd">    :param current_time: the current time to add it as a separator in the csv file</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">cpu_core_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">cpu_per_core</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">get_cpu_per_core</span><span class="p">()):</span>
+        <span class="c1"># save cpu stats in csv file</span>
+        <span class="k">if</span> <span class="n">index</span> <span class="o">%</span> <span class="mi">12</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">cpu_csv_writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;#################### CPU STATS </span><span class="si">{</span><span class="n">current_time</span><span class="si">}</span><span class="s2"> ####################&quot;</span><span class="p">])</span>
+        <span class="n">cpu_csv_writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="s2">&quot;CPU&quot;</span><span class="p">,</span> <span class="s2">&quot;Core &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">index</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">cpu_per_core</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;%&quot;</span><span class="p">])</span>
+
+        <span class="c1"># create a string to display cpu stats</span>
+        <span class="k">if</span> <span class="n">index</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">cpu_core_string</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">cpu_core_string</span> <span class="o">+=</span> <span class="s2">&quot;Core &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">index</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">cpu_per_core</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;%</span><span class="se">\t</span><span class="s2">&quot;</span>
+
+    <span class="c1"># update label</span>
+    <span class="n">cpu_tab</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">itemAt</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;CPU cores usage: &quot;</span> <span class="o">+</span> <span class="n">cpu_core_string</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="add_new_memory_stats"><a class="viewcode-back" href="../Resources.html#Resources.add_new_memory_stats">[docs]</a><span class="k">def</span> <span class="nf">add_new_memory_stats</span><span class="p">(</span><span class="n">memory_tab</span><span class="p">,</span> <span class="n">memory_csv_writer</span><span class="p">,</span> <span class="n">current_time</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Add new memory stats to the memory tab and save them in a csv file with the current time as a separator</span>
+<span class="sd">    :param memory_tab: the memory tab of the application (QTabWidget) to add the stats to it</span>
+<span class="sd">    :param memory_csv_writer: the csv writer to save the stats in a csv file</span>
+<span class="sd">    :param current_time: the current time to add it as a separator in the csv file</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">memory_stats</span> <span class="o">=</span> <span class="n">get_memory_stats</span><span class="p">()</span>
+    <span class="n">memory_stats</span> <span class="o">=</span> <span class="p">[</span><span class="nb">round</span><span class="p">(</span><span class="n">x</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1024</span> <span class="o">**</span> <span class="mi">3</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">memory_stats</span><span class="p">]</span>
+    <span class="n">memory_tab</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">itemAt</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;Total memory: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">memory_stats</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot; GB&quot;</span><span class="p">)</span>
+    <span class="n">memory_tab</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">itemAt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;Available memory: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">memory_stats</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot; GB&quot;</span><span class="p">)</span>
+    <span class="n">memory_tab</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">itemAt</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;In use memory: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">memory_stats</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot; GB&quot;</span><span class="p">)</span>
+    <span class="n">memory_tab</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">itemAt</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;Memory usage: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">memory_stats</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;%&quot;</span><span class="p">)</span>
+
+    <span class="c1"># save memory stats in csv file</span>
+    <span class="n">memory_csv_writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;#################### MEMORY STATS </span><span class="si">{</span><span class="n">current_time</span><span class="si">}</span><span class="s2"> ####################&quot;</span><span class="p">])</span>
+    <span class="n">memory_csv_writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="s2">&quot;Total memory&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">memory_stats</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot; GB&quot;</span><span class="p">])</span>
+    <span class="n">memory_csv_writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="s2">&quot;Available memory&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">memory_stats</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot; GB&quot;</span><span class="p">])</span>
+    <span class="n">memory_csv_writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="s2">&quot;In use memory&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">memory_stats</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot; GB&quot;</span><span class="p">])</span>
+    <span class="n">memory_csv_writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="s2">&quot;Memory usage&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">memory_stats</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;%&quot;</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="add_new_partitions_stats"><a class="viewcode-back" href="../Resources.html#Resources.add_new_partitions_stats">[docs]</a><span class="k">def</span> <span class="nf">add_new_partitions_stats</span><span class="p">(</span><span class="n">partitions_tab</span><span class="p">,</span> <span class="n">disk_csv_writer</span><span class="p">,</span> <span class="n">current_time</span><span class="p">,</span> <span class="n">partitions_info</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Add new partitions stats to the partitions tab and save them in a csv file with the current time as a separator</span>
+<span class="sd">    :param partitions_tab: the partitions tab of the application (QTabWidget) to add the stats to it</span>
+<span class="sd">    :param disk_csv_writer: the csv writer to save the stats in a csv file</span>
+<span class="sd">    :param current_time: the current time to add it as a separator in the csv file</span>
+<span class="sd">    :param partitions_info: the partitions info to add to the partitions tab (list of tuples)</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">partition</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">partitions_info</span><span class="p">):</span>
+        <span class="n">partition_layout</span> <span class="o">=</span> <span class="n">partitions_tab</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">itemAt</span><span class="p">(</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span>
+        <span class="n">partition_layout</span><span class="o">.</span><span class="n">itemAt</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;Total size: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">partition</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot; GB&quot;</span><span class="p">)</span>
+        <span class="n">partition_layout</span><span class="o">.</span><span class="n">itemAt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;Used size: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">partition</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot; GB&quot;</span><span class="p">)</span>
+        <span class="n">partition_layout</span><span class="o">.</span><span class="n">itemAt</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;Free size: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">partition</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot; GB&quot;</span><span class="p">)</span>
+        <span class="n">partition_layout</span><span class="o">.</span><span class="n">itemAt</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;Usage: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">partition</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;%&quot;</span><span class="p">)</span>
+
+        <span class="c1"># save disk stats in csv file</span>
+        <span class="k">if</span> <span class="n">index</span> <span class="o">%</span> <span class="mi">5</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">disk_csv_writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;#################### DISK STATS </span><span class="si">{</span><span class="n">current_time</span><span class="si">}</span><span class="s2"> ####################&quot;</span><span class="p">])</span>
+        <span class="n">disk_csv_writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="s2">&quot;Partition&quot;</span><span class="p">,</span> <span class="n">partition</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+        <span class="n">disk_csv_writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="s2">&quot;Total size&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">partition</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot; GB&quot;</span><span class="p">])</span>
+        <span class="n">disk_csv_writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="s2">&quot;Used size&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">partition</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot; GB&quot;</span><span class="p">])</span>
+        <span class="n">disk_csv_writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="s2">&quot;Free size&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">partition</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot; GB&quot;</span><span class="p">])</span>
+        <span class="n">disk_csv_writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="s2">&quot;Usage&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">partition</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;%&quot;</span><span class="p">])</span>
+        <span class="n">disk_csv_writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="s2">&quot;---------------&quot;</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="add_new_network_stats"><a class="viewcode-back" href="../Resources.html#Resources.add_new_network_stats">[docs]</a><span class="k">def</span> <span class="nf">add_new_network_stats</span><span class="p">(</span><span class="n">network_tab</span><span class="p">,</span> <span class="n">network_csv_writer</span><span class="p">,</span> <span class="n">current_time</span><span class="p">,</span> <span class="n">network_info</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Add new network stats to the network tab and save them in a csv file with the current time as a separator</span>
+<span class="sd">    :param network_tab: the network tab of the application (QTabWidget) to add the stats to it</span>
+<span class="sd">    :param network_csv_writer: the csv writer to save the stats in a csv file</span>
+<span class="sd">    :param current_time: the current time to add it as a separator in the csv file</span>
+<span class="sd">    :param network_info: the network info to add to the network tab (list of tuples)</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">network_tab</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">itemAt</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;Sent (YELLOW): &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">network_info</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot; MB&quot;</span><span class="p">)</span>
+    <span class="n">network_tab</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">itemAt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;Received (GREEN) : &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">network_info</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot; MB&quot;</span><span class="p">)</span>
+
+    <span class="c1"># save network stats in csv file</span>
+    <span class="n">network_csv_writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;#################### NETWORK STATS </span><span class="si">{</span><span class="n">current_time</span><span class="si">}</span><span class="s2"> ####################&quot;</span><span class="p">])</span>
+    <span class="n">network_csv_writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="s2">&quot;Sent&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">network_info</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot; MB&quot;</span><span class="p">])</span>
+    <span class="n">network_csv_writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="s2">&quot;Received&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">network_info</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot; MB&quot;</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="get_pdf_printer"><a class="viewcode-back" href="../Resources.html#Resources.get_pdf_printer">[docs]</a><span class="k">def</span> <span class="nf">get_pdf_printer</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create and Get the pdf printer with the given name</span>
+<span class="sd">    :param name: the name of the pdf printer to get (str)</span>
+<span class="sd">    :return: the pdf printer with the given name (QPrinter)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">printer</span> <span class="o">=</span> <span class="n">QPrinter</span><span class="p">()</span>
+    <span class="n">printer</span><span class="o">.</span><span class="n">setOutputFormat</span><span class="p">(</span><span class="n">QPrinter</span><span class="o">.</span><span class="n">PdfFormat</span><span class="p">)</span>
+    <span class="n">printer</span><span class="o">.</span><span class="n">setOutputFileName</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="n">printer</span><span class="o">.</span><span class="n">setPaperSize</span><span class="p">(</span><span class="n">QPrinter</span><span class="o">.</span><span class="n">A4</span><span class="p">)</span>
+    <span class="n">printer</span><span class="o">.</span><span class="n">setPageMargins</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">QPrinter</span><span class="o">.</span><span class="n">Millimeter</span><span class="p">)</span>
+    <span class="n">printer</span><span class="o">.</span><span class="n">setFullPage</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">printer</span></div>
+
+
+<div class="viewcode-block" id="launch_pdf_exporter"><a class="viewcode-back" href="../Resources.html#Resources.launch_pdf_exporter">[docs]</a><span class="k">def</span> <span class="nf">launch_pdf_exporter</span><span class="p">(</span><span class="n">resource_plot</span><span class="p">,</span> <span class="n">printer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Launch the pdf exporter to export the given resource plot to a pdf file</span>
+<span class="sd">    :param resource_plot: the resource plot to export to a pdf file</span>
+<span class="sd">    :param printer: the pdf printer to use to export the resource plot to a pdf file</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">painter</span> <span class="o">=</span> <span class="n">QPainter</span><span class="p">()</span>
+    <span class="n">painter</span><span class="o">.</span><span class="n">begin</span><span class="p">(</span><span class="n">printer</span><span class="p">)</span>
+    <span class="n">resource_plot</span><span class="o">.</span><span class="n">plotItem</span><span class="o">.</span><span class="n">scene</span><span class="p">()</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">painter</span><span class="p">)</span>
+    <span class="n">painter</span><span class="o">.</span><span class="n">end</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="export_chart"><a class="viewcode-back" href="../Resources.html#Resources.export_chart">[docs]</a><span class="k">def</span> <span class="nf">export_chart</span><span class="p">(</span><span class="n">tab_type</span><span class="p">,</span> <span class="n">resource_plot</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Export the given resource plot to a pdf file and a jpeg file</span>
+<span class="sd">    :param tab_type: the type of the tab to export the resource plot to a pdf file and a jpeg file (str)</span>
+<span class="sd">    :param resource_plot: the resource plot to export to a pdf file and a jpeg file</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Exporting chart...&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">tab_type</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="c1"># export as jpeg</span>
+        <span class="n">exporter</span> <span class="o">=</span> <span class="n">pg</span><span class="o">.</span><span class="n">exporters</span><span class="o">.</span><span class="n">ImageExporter</span><span class="p">(</span><span class="n">resource_plot</span><span class="o">.</span><span class="n">plotItem</span><span class="p">)</span>
+        <span class="n">exporter</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="s2">&quot;exported_res/cpu_chart.jpeg&quot;</span><span class="p">)</span>
+
+        <span class="c1"># export as pdf</span>
+        <span class="n">printer</span> <span class="o">=</span> <span class="n">get_pdf_printer</span><span class="p">(</span><span class="s2">&quot;exported_res/cpu_chart.pdf&quot;</span><span class="p">)</span>
+        <span class="n">launch_pdf_exporter</span><span class="p">(</span><span class="n">resource_plot</span><span class="p">,</span> <span class="n">printer</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">tab_type</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="c1"># export as jpeg</span>
+        <span class="n">exporter</span> <span class="o">=</span> <span class="n">pg</span><span class="o">.</span><span class="n">exporters</span><span class="o">.</span><span class="n">ImageExporter</span><span class="p">(</span><span class="n">resource_plot</span><span class="o">.</span><span class="n">plotItem</span><span class="p">)</span>
+        <span class="n">exporter</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="s2">&quot;exported_res/memory_chart.jpeg&quot;</span><span class="p">)</span>
+
+        <span class="c1"># export as pdf</span>
+        <span class="n">printer</span> <span class="o">=</span> <span class="n">get_pdf_printer</span><span class="p">(</span><span class="s2">&quot;exported_res/memory_chart.pdf&quot;</span><span class="p">)</span>
+        <span class="n">launch_pdf_exporter</span><span class="p">(</span><span class="n">resource_plot</span><span class="p">,</span> <span class="n">printer</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">tab_type</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="c1"># exporting QChartView as jpeg</span>
+        <span class="n">resource_plot</span><span class="o">.</span><span class="n">grab</span><span class="p">()</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;exported_res/disk_chart.jpeg&quot;</span><span class="p">)</span>
+
+        <span class="c1"># exporting QChartView as pdf</span>
+        <span class="n">printer</span> <span class="o">=</span> <span class="n">get_pdf_printer</span><span class="p">(</span><span class="s2">&quot;exported_res/disk_chart.pdf&quot;</span><span class="p">)</span>
+        <span class="n">painter</span> <span class="o">=</span> <span class="n">QPainter</span><span class="p">()</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">begin</span><span class="p">(</span><span class="n">printer</span><span class="p">)</span>
+        <span class="n">resource_plot</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">painter</span><span class="p">)</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="n">tab_type</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="c1"># export as jpeg</span>
+        <span class="n">exporter</span> <span class="o">=</span> <span class="n">pg</span><span class="o">.</span><span class="n">exporters</span><span class="o">.</span><span class="n">ImageExporter</span><span class="p">(</span><span class="n">resource_plot</span><span class="o">.</span><span class="n">plotItem</span><span class="p">)</span>
+        <span class="n">exporter</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="s2">&quot;exported_res/network_chart.jpeg&quot;</span><span class="p">)</span>
+
+        <span class="c1"># export as pdf</span>
+        <span class="n">printer</span> <span class="o">=</span> <span class="n">get_pdf_printer</span><span class="p">(</span><span class="s2">&quot;exported_res/network_chart.pdf&quot;</span><span class="p">)</span>
+        <span class="n">launch_pdf_exporter</span><span class="p">(</span><span class="n">resource_plot</span><span class="p">,</span> <span class="n">printer</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Chart exported!&quot;</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Samuel Chiscari.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

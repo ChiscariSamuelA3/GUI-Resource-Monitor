@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resources module &mdash; GUI Resource Monitor 1.0.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> GUI Resource Monitor
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Resources module</a><ul>
+<li><a class="reference internal" href="#Resources.add_new_cpu_stats"><code class="docutils literal notranslate"><span class="pre">add_new_cpu_stats()</span></code></a></li>
+<li><a class="reference internal" href="#Resources.add_new_memory_stats"><code class="docutils literal notranslate"><span class="pre">add_new_memory_stats()</span></code></a></li>
+<li><a class="reference internal" href="#Resources.add_new_network_stats"><code class="docutils literal notranslate"><span class="pre">add_new_network_stats()</span></code></a></li>
+<li><a class="reference internal" href="#Resources.add_new_partitions_stats"><code class="docutils literal notranslate"><span class="pre">add_new_partitions_stats()</span></code></a></li>
+<li><a class="reference internal" href="#Resources.export_chart"><code class="docutils literal notranslate"><span class="pre">export_chart()</span></code></a></li>
+<li><a class="reference internal" href="#Resources.get_pdf_printer"><code class="docutils literal notranslate"><span class="pre">get_pdf_printer()</span></code></a></li>
+<li><a class="reference internal" href="#Resources.launch_pdf_exporter"><code class="docutils literal notranslate"><span class="pre">launch_pdf_exporter()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">GUI Resource Monitor</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Resources module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Resources.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-Resources">
+<span id="resources-module"></span><h1>Resources module<a class="headerlink" href="#module-Resources" title="Permalink to this heading"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="Resources.add_new_cpu_stats">
+<span class="sig-prename descclassname"><span class="pre">Resources.</span></span><span class="sig-name descname"><span class="pre">add_new_cpu_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cpu_tab</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cpu_csv_writer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_time</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Resources.html#add_new_cpu_stats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Resources.add_new_cpu_stats" title="Permalink to this definition"></a></dt>
+<dd><p>Add new cpu stats to the cpu tab and save them in a csv file with the current time as a separator
+:param cpu_tab: the cpu tab of the application (QTabWidget) to add the stats to it
+:param cpu_csv_writer: the csv writer to save the stats in a csv file
+:param current_time: the current time to add it as a separator in the csv file
+:return:</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Resources.add_new_memory_stats">
+<span class="sig-prename descclassname"><span class="pre">Resources.</span></span><span class="sig-name descname"><span class="pre">add_new_memory_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">memory_tab</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory_csv_writer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_time</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Resources.html#add_new_memory_stats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Resources.add_new_memory_stats" title="Permalink to this definition"></a></dt>
+<dd><p>Add new memory stats to the memory tab and save them in a csv file with the current time as a separator
+:param memory_tab: the memory tab of the application (QTabWidget) to add the stats to it
+:param memory_csv_writer: the csv writer to save the stats in a csv file
+:param current_time: the current time to add it as a separator in the csv file
+:return:</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Resources.add_new_network_stats">
+<span class="sig-prename descclassname"><span class="pre">Resources.</span></span><span class="sig-name descname"><span class="pre">add_new_network_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">network_tab</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">network_csv_writer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">network_info</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Resources.html#add_new_network_stats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Resources.add_new_network_stats" title="Permalink to this definition"></a></dt>
+<dd><p>Add new network stats to the network tab and save them in a csv file with the current time as a separator
+:param network_tab: the network tab of the application (QTabWidget) to add the stats to it
+:param network_csv_writer: the csv writer to save the stats in a csv file
+:param current_time: the current time to add it as a separator in the csv file
+:param network_info: the network info to add to the network tab (list of tuples)
+:return:</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Resources.add_new_partitions_stats">
+<span class="sig-prename descclassname"><span class="pre">Resources.</span></span><span class="sig-name descname"><span class="pre">add_new_partitions_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">partitions_tab</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disk_csv_writer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partitions_info</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Resources.html#add_new_partitions_stats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Resources.add_new_partitions_stats" title="Permalink to this definition"></a></dt>
+<dd><p>Add new partitions stats to the partitions tab and save them in a csv file with the current time as a separator
+:param partitions_tab: the partitions tab of the application (QTabWidget) to add the stats to it
+:param disk_csv_writer: the csv writer to save the stats in a csv file
+:param current_time: the current time to add it as a separator in the csv file
+:param partitions_info: the partitions info to add to the partitions tab (list of tuples)
+:return:</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Resources.export_chart">
+<span class="sig-prename descclassname"><span class="pre">Resources.</span></span><span class="sig-name descname"><span class="pre">export_chart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tab_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resource_plot</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Resources.html#export_chart"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Resources.export_chart" title="Permalink to this definition"></a></dt>
+<dd><p>Export the given resource plot to a pdf file and a jpeg file
+:param tab_type: the type of the tab to export the resource plot to a pdf file and a jpeg file (str)
+:param resource_plot: the resource plot to export to a pdf file and a jpeg file
+:return:</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Resources.get_pdf_printer">
+<span class="sig-prename descclassname"><span class="pre">Resources.</span></span><span class="sig-name descname"><span class="pre">get_pdf_printer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Resources.html#get_pdf_printer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Resources.get_pdf_printer" title="Permalink to this definition"></a></dt>
+<dd><p>Create and Get the pdf printer with the given name
+:param name: the name of the pdf printer to get (str)
+:return: the pdf printer with the given name (QPrinter)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Resources.launch_pdf_exporter">
+<span class="sig-prename descclassname"><span class="pre">Resources.</span></span><span class="sig-name descname"><span class="pre">launch_pdf_exporter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">resource_plot</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">printer</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Resources.html#launch_pdf_exporter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Resources.launch_pdf_exporter" title="Permalink to this definition"></a></dt>
+<dd><p>Launch the pdf exporter to export the given resource plot to a pdf file
+:param resource_plot: the resource plot to export to a pdf file
+:param printer: the pdf printer to use to export the resource plot to a pdf file
+:return:</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Samuel Chiscari.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
