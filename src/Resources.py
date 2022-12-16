@@ -139,25 +139,25 @@ def export_chart(tab_type, resource_plot):
     if tab_type == 0:
         # export as jpeg
         exporter = pg.exporters.ImageExporter(resource_plot.plotItem)
-        exporter.export("exported_res/cpu_chart.jpeg")
+        exporter.export("src/exported_res/cpu_chart.jpeg")
 
         # export as pdf
-        printer = get_pdf_printer("exported_res/cpu_chart.pdf")
+        printer = get_pdf_printer("src/exported_res/cpu_chart.pdf")
         launch_pdf_exporter(resource_plot, printer)
     elif tab_type == 1:
         # export as jpeg
         exporter = pg.exporters.ImageExporter(resource_plot.plotItem)
-        exporter.export("exported_res/memory_chart.jpeg")
+        exporter.export("src/exported_res/memory_chart.jpeg")
 
         # export as pdf
-        printer = get_pdf_printer("exported_res/memory_chart.pdf")
+        printer = get_pdf_printer("src/exported_res/memory_chart.pdf")
         launch_pdf_exporter(resource_plot, printer)
     elif tab_type == 2:
         # exporting QChartView as jpeg
-        resource_plot.grab().save("exported_res/disk_chart.jpeg")
+        resource_plot.grab().save("src/exported_res/disk_chart.jpeg")
 
         # exporting QChartView as pdf
-        printer = get_pdf_printer("exported_res/disk_chart.pdf")
+        printer = get_pdf_printer("src/exported_res/disk_chart.pdf")
         painter = QPainter()
         painter.begin(printer)
         resource_plot.render(painter)
@@ -165,10 +165,10 @@ def export_chart(tab_type, resource_plot):
     elif tab_type == 3:
         # export as jpeg
         exporter = pg.exporters.ImageExporter(resource_plot.plotItem)
-        exporter.export("exported_res/network_chart.jpeg")
+        exporter.export("src/exported_res/network_chart.jpeg")
 
         # export as pdf
-        printer = get_pdf_printer("exported_res/network_chart.pdf")
+        printer = get_pdf_printer("src/exported_res/network_chart.pdf")
         launch_pdf_exporter(resource_plot, printer)
 
     print("Chart exported!")
